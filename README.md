@@ -1,1 +1,7 @@
-# plugin-casino-game
+# @roxavn/plugin-casino-game
+
+## Release
+
+```
+npx standard-version
+```
