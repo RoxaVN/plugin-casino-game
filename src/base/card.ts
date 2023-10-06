@@ -44,7 +44,7 @@ export class Card {
     return this.name;
   }
 
-  static suits = ['spade', 'club', 'heart', 'diamond'];
+  static suits = ['heart', 'club', 'diamond', 'spade'];
   static values = [
     'A',
     '2',
