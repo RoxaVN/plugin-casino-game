@@ -1,42 +1,44 @@
 import Phaser from 'phaser';
 
 export class CardSprite extends Phaser.GameObjects.Sprite {
-  static BACK_SPRITE_ID = 52;
-  static FLIP_SPEED = 200;
-  static FLIP_ZOOM = 1.2;
+  static readonly backSpriteId = 52;
 
-  isUp = false;
+  static flipDuration = 200;
+  static flipZoom = 1.2;
+  static moveDuration = 300;
+
+  private isUp = false;
 
   constructor(scene: Phaser.Scene, x = 0, y = 0) {
-    super(scene, x, y, 'cards', CardSprite.BACK_SPRITE_ID);
+    super(scene, x, y, 'cards', CardSprite.backSpriteId);
   }
 
   reset() {
-    this.setFrame(CardSprite.BACK_SPRITE_ID);
+    this.setFrame((this.constructor as typeof CardSprite).backSpriteId);
     this.isUp = false;
   }
 
-  turnUp(cardId: number, onComplete?: () => void) {
+  turnUp(cardId: number, options?: { onComplete?: () => void }) {
     if (this.isUp) return;
     this.scene.tweens.chain({
       targets: this,
       tweens: [
         {
-          duration: CardSprite.FLIP_SPEED / 2,
+          duration: (this.constructor as typeof CardSprite).flipDuration / 2,
           scaleX: 0,
-          scaleY: CardSprite.FLIP_ZOOM,
+          scaleY: (this.constructor as typeof CardSprite).flipZoom,
           onComplete: () => {
             this.setFrame(cardId);
           },
         },
         {
-          duration: CardSprite.FLIP_SPEED / 2,
+          duration: (this.constructor as typeof CardSprite).flipDuration / 2,
           scaleX: 1,
           scaleY: 1,
           onComplete: () => {
             this.isUp = true;
-            if (onComplete) {
-              onComplete();
+            if (options?.onComplete) {
+              options.onComplete();
             }
           },
         },
@@ -44,28 +46,28 @@ export class CardSprite extends Phaser.GameObjects.Sprite {
     });
   }
 
-  turnDown(onComplete?: () => void) {
+  turnDown(options?: { onComplete?: () => void }) {
     if (!this.isUp) return;
     this.isUp = true;
     this.scene.tweens.chain({
       targets: this,
       tweens: [
         {
-          duration: CardSprite.FLIP_SPEED / 2,
+          duration: (this.constructor as typeof CardSprite).flipDuration / 2,
           scaleX: 0,
-          scaleY: CardSprite.FLIP_ZOOM,
+          scaleY: (this.constructor as typeof CardSprite).flipZoom,
           onComplete: () => {
-            this.setFrame(CardSprite.BACK_SPRITE_ID);
+            this.setFrame((this.constructor as typeof CardSprite).backSpriteId);
           },
         },
         {
-          duration: CardSprite.FLIP_SPEED / 2,
+          duration: (this.constructor as typeof CardSprite).flipDuration / 2,
           scaleX: 1,
           scaleY: 1,
           onComplete: () => {
             this.isUp = false;
-            if (onComplete) {
-              onComplete();
+            if (options?.onComplete) {
+              options.onComplete();
             }
           },
         },
@@ -73,56 +75,62 @@ export class CardSprite extends Phaser.GameObjects.Sprite {
     });
   }
 
-  moveToTurnUp(
-    x: number,
-    y: number,
-    angle: number,
+  moveToUp(
     cardId: number,
-    onComplete?: () => void
+    options: {
+      x: number;
+      y: number;
+      angle?: number;
+      onComplete?: () => void;
+    }
   ) {
-    this.scene.tweens.add({
-      targets: this,
-      duration: 200,
-      angle: angle,
-    });
-    this.moveTo(x, y, 0, () => {
-      this.turnUp(cardId, onComplete);
-    });
-  }
-
-  moveToTurnDown(x: number, y: number, angle: number, onComplete?: () => void) {
-    this.scene.tweens.add({
-      targets: this,
-      duration: 200,
-      angle: angle,
-    });
-    this.moveTo(x, y, 0, () => {
-      this.turnDown(onComplete);
-    });
-  }
-
-  moveTo(x: number, y: number, offset: number, onComplete?: () => void) {
-    const tweens = [
-      {
-        x,
-        y,
-        duration: 300,
-        onComplete,
-      },
-    ];
-
-    if (offset) {
-      tweens[0].duration = 150;
-      tweens.unshift({
-        x: x - offset,
-        y: y - offset,
-        duration: 150,
-        onComplete: undefined,
+    if (options.angle) {
+      this.scene.tweens.add({
+        targets: this,
+        duration: (this.constructor as typeof CardSprite).moveDuration,
+        angle: options.angle,
       });
     }
+    this.moveTo({
+      x: options.x,
+      y: options.y,
+      onComplete: () => {
+        this.turnUp(cardId, { onComplete: options.onComplete });
+      },
+    });
+  }
+
+  moveToDown(options: {
+    x: number;
+    y: number;
+    angle?: number;
+    onComplete?: () => void;
+  }) {
+    this.scene.tweens.add({
+      targets: this,
+      duration: (this.constructor as typeof CardSprite).moveDuration,
+      angle: options.angle,
+    });
+    this.moveTo({
+      x: options.x,
+      y: options.y,
+      onComplete: () => {
+        this.turnDown({ onComplete: options.onComplete });
+      },
+    });
+  }
+
+  moveTo(options: { x: number; y: number; onComplete?: () => void }) {
     this.scene.tweens.chain({
       targets: this,
-      tweens,
+      tweens: [
+        {
+          x: options.x,
+          y: options.y,
+          duration: (this.constructor as typeof CardSprite).moveDuration,
+          onComplete: options.onComplete,
+        },
+      ],
     });
   }
 }

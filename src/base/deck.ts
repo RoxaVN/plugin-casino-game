@@ -1,7 +1,7 @@
 import { shuffle } from 'lodash-es';
 
 export class Deck<C> {
-  cards: Array<C>;
+  private cards: Array<C>;
 
   constructor(cardClass: { new (id: number): C }, quantity = 52) {
     this.cards = [];
