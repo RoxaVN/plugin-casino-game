@@ -17,7 +17,7 @@ export class Card {
   name: string;
 
   constructor(public readonly id: number) {
-    this.suit = Card.values[Math.floor(id / 13)] as any;
+    this.suit = Card.suits[Math.floor(id / 13)] as any;
     this.value = Card.values[id % 13] as any;
     this.name = this.genName();
   }
