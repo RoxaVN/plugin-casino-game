@@ -17,4 +17,8 @@ export class Deck<C> {
   draw() {
     return this.cards.pop();
   }
+
+  getCards() {
+    return [...this.cards];
+  }
 }
