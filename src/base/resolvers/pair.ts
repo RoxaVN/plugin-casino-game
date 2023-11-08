@@ -2,7 +2,7 @@ import { Card } from '../card.js';
 import { BaseResolver } from './base.js';
 
 export class PairResolver extends BaseResolver {
-  static resolver(cards: Card[]) {
+  static resolve(cards: Card[]) {
     const group = this.groupByValue(cards);
     const result: Array<[Card, Card]> = [];
 
