@@ -16,7 +16,6 @@
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
     "@roxavn/cli": "^0.2.0",
-    "@roxavn/module-user": "^0.2.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -34,6 +33,7 @@
     "@remix-run/node": "^1.19.1",
     "@remix-run/react": "^1.19.1",
     "@roxavn/core": "^0.2.0",
+    "@roxavn/module-user": "^0.2.0",
     "@tabler/icons-react": "^2.12.0",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
@@ -41,6 +41,7 @@
     "typeorm": "^0.3.10"
   },
   "exports": {
+    "./hook": "./dist/esm/hook/index.js",
     ".": "./dist/esm/index.js",
     "./web": "./dist/esm/web/index.js",
     "./base": "./dist/esm/base/index.js",
@@ -48,6 +49,9 @@
   },
   "typesVersions": {
     "*": {
+      "hook": [
+        "dist/esm/hook/index.d.ts"
+      ],
       "web": [
         "dist/esm/web/index.d.ts"
       ],
