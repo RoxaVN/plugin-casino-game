@@ -41,7 +41,6 @@
     "typeorm": "^0.3.10"
   },
   "exports": {
-    "./hook": "./dist/esm/hook/index.js",
     ".": "./dist/esm/index.js",
     "./web": "./dist/esm/web/index.js",
     "./base": "./dist/esm/base/index.js",
@@ -49,9 +48,6 @@
   },
   "typesVersions": {
     "*": {
-      "hook": [
-        "dist/esm/hook/index.d.ts"
-      ],
       "web": [
         "dist/esm/web/index.d.ts"
       ],

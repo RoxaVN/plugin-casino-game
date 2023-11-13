@@ -5,7 +5,7 @@ import {
   GetUsersApiService,
 } from '@roxavn/module-user/server';
 
-import { serverModule } from '../server/index.js';
+import { serverModule } from '../module.js';
 
 @serverModule.injectable()
 export class CreateBankerAccountsHook extends BaseService {
