@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/RoxaVN/roxavn/compare/v0.1.0...v0.1.1) (2023-11-21)
+
+### Features
+
+- add BetGameSocketService ([d5e99d7](https://github.com/RoxaVN/roxavn/commit/d5e99d79dfa8ac9a11ec3f7d86214ed528212ed8))
+- add CreateBankerAccountsHook ([342e61e](https://github.com/RoxaVN/roxavn/commit/342e61e82147e5b4f6d9df601473902cf69031de))
+- add CreateBankerTransactionService ([c24905c](https://github.com/RoxaVN/roxavn/commit/c24905c78f369062fecd118ac313a20a42ceadab))
+
 ## 0.1.0 (2023-11-11)
 
 ### Features
