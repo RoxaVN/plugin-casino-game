@@ -2,7 +2,7 @@ import {
   BaseService,
   inject,
   type InferContext,
-  transactionUtils,
+  databaseUtils,
 } from '@roxavn/core/server';
 import {
   GetUserCurrencyAccountsService,
@@ -125,7 +125,7 @@ export class TakeMoneyService extends BaseService {
       )
     );
 
-    await transactionUtils.runInTransaction(
+    await databaseUtils.runInTransaction(
       () => {
         return this.createTransactionService.handle({
           type: game,
@@ -133,7 +133,7 @@ export class TakeMoneyService extends BaseService {
           accounts: safeAmounts,
         });
       },
-      { propagation: transactionUtils.Propagation.NESTED }
+      { propagation: databaseUtils.Propagation.NESTED }
     );
   }
 
@@ -209,7 +209,7 @@ export class PayoutService extends BaseService {
       `$.${currencyId}`
     );
 
-    await transactionUtils.runInTransaction(
+    await databaseUtils.runInTransaction(
       () => {
         return this.createTransactionService.handle({
           currencyId,
@@ -226,7 +226,7 @@ export class PayoutService extends BaseService {
           ],
         });
       },
-      { propagation: transactionUtils.Propagation.NESTED }
+      { propagation: databaseUtils.Propagation.NESTED }
     );
 
     return amounts;
